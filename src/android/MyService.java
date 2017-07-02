@@ -21,13 +21,15 @@ public class MyService extends BackgroundService {
 
 	@Override
 	protected JSONArray doWork() {
-		JSONArray jsons = new JSONArray();
+		JSONObject json_output = new JSONObject();
 		
+		
+		// INTERNET USAGE
+		JSONArray json_internet = new JSONArray();
         List<ApplicationInfo> packages = getActivity().getPackageManager().getInstalledPackages(0);
-
         for (ApplicationInfo packageInfo : packages) {
-            // get the UID for the selected app
-			
+
+			// get the UID for the selected app
             int UID = packageInfo.uid;
             String package_name = packageInfo.packageName;
             ApplicationInfo app = null;
@@ -50,14 +52,16 @@ public class MyService extends BackgroundService {
 					json.put("received", received);
 					json.put("send", send);
 					json.put("total", total);
-					jsons.put((Object)json);
+					json_internet.put((Object)json);
 				} catch ( Exception e ) { 
 					e.printStackTrace(); 
 				}
 			}
         }
 		
-        return jsons;
+		json_output.put("traffic", json_internet);
+		
+        return json_output;
 	}
 
 	@Override
