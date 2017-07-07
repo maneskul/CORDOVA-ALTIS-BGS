@@ -1,6 +1,6 @@
 {
   "name": "com.red_folder.phonegap.plugin.backgroundservice.sample",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Sample service to demonstrate the use of the Cordova Android Background Service.",
   "repository": {
     "type": "git",
