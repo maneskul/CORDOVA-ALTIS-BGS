@@ -45,44 +45,7 @@ public class MyService extends BackgroundService {
   @Override
   protected JSONObject doWork() {
     JSONObject json_output = new JSONObject();
-    Context context = getBaseContext();
-    PackageManager pm = context.getPackageManager();
-
-    // INTERNET USAGE
-    JSONArray json_internet = new JSONArray();
-
-    List < ApplicationInfo > packages = pm.getInstalledApplications(0);
-    for (ApplicationInfo packageInfo: packages) {
-
-      // get the UID for the selected app
-      int UID = packageInfo.uid;
-      String package_name = packageInfo.packageName;
-      ApplicationInfo app = null;
-      try {
-        app = pm.getApplicationInfo(package_name, 0);
-      } catch (PackageManager.NameNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      String name = (String) pm.getApplicationLabel(app);
-      double received = (double) TrafficStats.getUidRxBytes(UID) / 1024 / 1024;
-      double send = (double) TrafficStats.getUidTxBytes(UID) / 1024 / 1024;
-      double total = received + send;
-
-      if (total > 0) {
-        try {
-          JSONObject json = new JSONObject();
-          json.put("uid", UID);
-          json.put("name", name);
-          json.put("received", received);
-          json.put("send", send);
-          json.put("total", total);
-          json_internet.put((Object) json);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
-    }
+    JSONArray json_internet = getTrafficInfo();
 
     try {
       json_output.put("traffic", json_internet);
@@ -132,5 +95,43 @@ public class MyService extends BackgroundService {
 
   }
 
+  private JSONArray getTrafficInfo() {
+    JSONArray json_internet = new JSONArray();
+    Context context = getBaseContext();
+    PackageManager pm = context.getPackageManager();
+    List < ApplicationInfo > packages = pm.getInstalledApplications(0);
+    for (ApplicationInfo packageInfo: packages) {
 
+      // get the UID for the selected app
+      int UID = packageInfo.uid;
+      String package_name = packageInfo.packageName;
+      ApplicationInfo app = null;
+      try {
+        app = pm.getApplicationInfo(package_name, 0);
+      } catch (PackageManager.NameNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      String name = (String) pm.getApplicationLabel(app);
+      double received = (double) TrafficStats.getUidRxBytes(UID) / 1024 / 1024;
+      double send = (double) TrafficStats.getUidTxBytes(UID) / 1024 / 1024;
+      double total = received + send;
+
+      if (total > 0) {
+        try {
+          JSONObject json = new JSONObject();
+          json.put("uid", UID);
+          json.put("name", name);
+          json.put("received", received);
+          json.put("send", send);
+          json.put("total", total);
+          json_internet.put((Object) json);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    return json_internet;
+  }
 }
