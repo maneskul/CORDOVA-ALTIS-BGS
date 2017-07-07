@@ -4,7 +4,7 @@
   "description": "Sample service to demonstrate the use of the Cordova Android Background Service.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Red-Folder/bgs-sample.git"
+    "url": "git+https://github.com/maneskul/CORDOVA-ALTIS-BGS.git"
   },
   "keywords": [
     "background",
@@ -20,9 +20,13 @@
     }
   ],
   "author": "Red-Folder",
-  "license": "Apache 2.0",
+  "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/Red-Folder/bgs-sample/issues"
+    "url": "https://github.com/maneskul/CORDOVA-ALTIS-BGS/issues"
   },
-  "homepage": "https://github.com/Red-Folder/bgs-sample#readme"
+  "homepage": "https://github.com/maneskul/CORDOVA-ALTIS-BGS#readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
